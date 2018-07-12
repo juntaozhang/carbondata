@@ -66,6 +66,8 @@
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-repl_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <scope>${spark.deps.scope}</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
@@ -311,6 +313,53 @@
                 <configuration>
                   <sources>
                     <source>src/main/spark2.2</source>
+                  </sources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>spark-2.1-cloudera1</id>
+      <properties>
+        <cdh.version>cdh5.7.6</cdh.version>
+        <hbase.version>1.2.0-${cdh.version}</hbase.version>
+        <hadoop.version>2.6.0-${cdh.version}</hadoop.version>
+        <scala.version>2.11.8</scala.version>
+        <scala.binary.version>2.11</scala.binary.version>
+        <spark.version>2.1.0.cloudera1</spark.version>
+        <cdh.hive.version>1.1.0-cdh5.7.0</cdh.hive.version>
+        <hive.group>org.apache.hive</hive.group>
+        <hive.version>${cdh.hive.version}</hive.version>
+        <jpam.version>1.1</jpam.version>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>src/main/spark2.1</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+              <execution>
+                <id>add-source</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>add-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>src/main/spark2.1-cloudera1</source>
                   </sources>
                 </configuration>
               </execution>
